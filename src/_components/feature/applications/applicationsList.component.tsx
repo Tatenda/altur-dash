@@ -1,15 +1,12 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { IListItem } from '../../../_models/queue.model';
 import { useGetQueue } from '../../../_hooks/getQueue.hook';
 import { ListItem } from './ListItem.component';
 import { Icon, Button, Dropdown, Menu, Result, message, Spin } from 'antd';
-import { AppContext } from '../../../_hooks/showHeader.context';
 import { queueService } from '../../../_services';
 
 const ApplicationsList: React.FC = () => {
-    const { queue, setQueue, loading, error } = useGetQueue();
-
-    const app = useContext(AppContext);
+    const { queue, loading, error } = useGetQueue();
     const queueList = queue
         .filter(x => (x.status !== 'cancel' &&
             x.status !== 'done' &&

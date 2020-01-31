@@ -11,11 +11,7 @@ import './App.scss';
 import { ErrorBoundary } from './_components/shared/ErrorBoundary';
 import { FullQueueView } from './_components/feature/queue-view/fullQueueView.component';
 import { AppContext } from './_hooks/showHeader.context';
-// import socketIOClient from 'socket.io-client';
 import { MainContainer } from './_components/feature/main-container/mainContainer.component';
-
-
-// const socket = socketIOClient(process.env.REACT_APP_SOCKET_ENDPOINT);
 
 const App: React.FC = () => {
     const [currentUser, setCurrentUser] = useState({});
@@ -34,7 +30,6 @@ const App: React.FC = () => {
                 lang: 'en',
                 authenticated: currentUser ? true : false,
                 showHeader: true,
-                // socket: socket,
             }
         }>
             <Router history={history}>

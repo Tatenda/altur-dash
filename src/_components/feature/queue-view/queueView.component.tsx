@@ -1,8 +1,7 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { authenticationService } from '../../../_services';
-import { IListItem } from '../../../_models/queue.model';
 import { useGetQueue } from '../../../_hooks/getQueue.hook';
-import { Icon, Avatar, notification, Result, Spin } from 'antd';
+import { Icon, Result, Spin } from 'antd';
 import { AppContext } from '../../../_hooks/showHeader.context';
 
 const QueueView: React.FC = () => {
