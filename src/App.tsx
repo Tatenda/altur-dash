@@ -42,7 +42,7 @@ const App: React.FC = () => {
                                 <Route path="/register" component={RegisterPage} />
                                 <PrivateRoute exact path="/enqueue" component={Enqueue} />
                                 <PrivateRoute exact path="/queue-view" component={FullQueueView} />
-                                <PrivateRoute path="/dashboard" component={MainContainer} />
+                                <Route path="/dashboard" component={MainContainer} />
                             </ErrorBoundary>
                         </div>
                     </div>
