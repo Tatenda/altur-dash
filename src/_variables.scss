@@ -1,0 +1,40 @@
+$main-black: #020205;
+$main-white: #f2f4f7;
+$main-red: #e43a19;
+$main-blue: #111f4d;
+$main-orange: #e48119;
+$main-green: #12A745;
+
+$dashboardHeader: 40px;
+
+.btn-primary {
+    background-color: $main-black !important;
+    outline: none !important;
+    border-color: none !important;
+}
+
+.header {
+    background-color: $main-white;
+    height: 80px;
+    overflow: hidden;
+    border-bottom: 1px dashed $main-white;
+
+    .logoContainer {
+        display: grid;
+        place-items: center end;
+        height: 80px;
+
+    }
+
+    .textContainer {
+        display: grid;
+        place-items: center start;
+        height: 80px;
+
+        h2 {
+            font-size: 22px;
+            color: $main-black;
+            margin-bottom: 0;
+        }
+    }
+}

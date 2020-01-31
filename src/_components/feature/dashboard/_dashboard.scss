@@ -1,0 +1,329 @@
+.dashboardMainSection {
+    height: calc(100vh - 55px);
+    overflow: hidden;
+    z-index: 10;
+}
+
+.sectionBody {
+    height: calc(100vh - 120px);
+    overflow-y: scroll;
+    padding-block-end: 15px;
+
+    .graphContainer {
+        @include boxShadow;
+        max-height: 350px;
+        background-color: lighten($main-white, 4);
+        margin-top: 15px;
+        border-radius: 5px;
+        padding-block-end: 15px;
+        overflow: hidden;
+
+        .graphContainerHeader {
+            border-block-end: 1px dashed #d1cfcf;
+            height: 40px;
+            display: grid;
+            place-items: center start;
+
+            p {
+                margin-bottom: 0;
+                font-size: 14px;
+                color: #838383;
+                font-weight: 600;
+            }
+        }
+
+        .graphContainerBody {
+            max-height: 265px;
+
+            .employeeListContainer {
+                max-height: 265px;
+                overflow-y: scroll;
+                overflow-x: hidden;
+
+                .employeeListContainerHeader {
+                    border-block-end: 1px dashed #d1cfcf;
+
+                    .employeeName {
+                        display: grid;
+                        place-items: center start;
+                        height: 60px;
+
+                        p {
+                            margin-bottom: 0;
+                            font-size: 12px;
+                            font-weight: 600;
+                            color: $main-blue;
+                        }
+                    }
+
+                    .servedCustomers {
+                        display: grid;
+                        place-items: center start;
+                        height: 60px;
+
+                        p {
+                            margin-bottom: 0;
+                            font-size: 12px;
+                            font-weight: 600;
+                            color: $main-blue;
+                        }
+                    }
+
+                    .avgCuttingTime {
+                        display: grid;
+                        place-items: center start;
+                        height: 60px;
+
+                        p {
+                            margin-bottom: 0;
+                            font-size: 12px;
+                            font-weight: 600;
+                            color: $main-blue;
+                        }
+                    }
+                }
+
+                ul {
+                    padding-inline-start: 0;
+
+                    li {
+                        list-style: none;
+                        height: 40px;
+
+                        .employeeName {
+                            display: grid;
+                            place-items: center start;
+
+                            p {
+                                margin-bottom: 0;
+                                font-size: 12px;
+                                font-weight: 500;
+                                color: #838383;
+                            }
+
+                            height: 40px;
+                        }
+                    }
+
+                    .servedCustomers {
+                        display: grid;
+                        place-items: center start;
+
+                        p {
+                            margin-bottom: 0;
+                            font-size: 12px;
+                            font-weight: 500;
+                            color: #838383;
+                        }
+
+                        height: 40px;
+                    }
+                }
+
+                .avgCuttingTime {
+                    display: grid;
+                    place-items: center start;
+
+                    p {
+                        margin-bottom: 0;
+                        font-size: 12px;
+                        font-weight: 500;
+                        color: #838383;
+                    }
+
+                    height: 40px;
+                }
+            }
+        }
+    }
+}
+
+.jobBody {
+    height: calc(100vh - 60px);
+    overflow: hidden;
+    padding-block-end: 15px;
+
+    .graphContainer {
+        @include boxShadow;
+        max-height: 350px;
+        background-color: lighten($main-white, 4);
+        margin-top: 15px;
+        border-radius: 5px;
+        padding-block-end: 15px;
+        overflow: hidden;
+
+        .graphContainerHeader {
+            border-block-end: 1px dashed #d1cfcf;
+            height: 40px;
+            display: grid;
+            place-items: center start;
+
+            p {
+                margin-bottom: 0;
+                font-size: 14px;
+                color: #838383;
+                font-weight: 600;
+            }
+        }
+
+        .graphContainerBody {
+            max-height: 265px;
+        }
+    }
+}
+
+.dashboardSideBar {
+    height: calc(100vh - 55px);
+    background-color: darken($main-white, 5);
+    overflow: hidden;
+
+    .sectionBody {
+        height: calc(100vh - 60px);
+        overflow-y: scroll;
+        padding-block-end: 15px;
+
+        .graphContainer {
+            @include boxShadow;
+            background-color: lighten($main-white, 4);
+            margin-top: 15px;
+            border-radius: 5px;
+            padding-block-end: 15px;
+            max-height: 350px;
+            overflow: hidden;
+
+            .graphContainerHeader {
+                border-block-end: 1px dashed #d1cfcf;
+                height: 40px;
+                display: grid;
+                place-items: center start;
+
+                p {
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    color: #838383;
+                    font-weight: 600;
+                }
+            }
+
+            .graphContainerBody {
+                .avgValues {
+                    height: 80px;
+                    margin-top: 15px;
+
+                    .avgValuesIcn {
+                        height: 80px;
+                        display: grid;
+                        place-items: center;
+                    }
+
+                    .avgValuesTxt {
+                        height: 80px;
+                        display: grid;
+                        place-items: center start;
+
+                        p {
+                            margin-bottom: 0;
+                            font-size: 28px;
+                            font-weight: 600;
+                            color: #838383;
+
+                            span {
+                                color: #111f4d2d;
+                            }
+                        }
+                    }
+                }
+
+                .avgSummary {
+                    p {
+                        // margin-top: 15px;
+                        margin-bottom: 15px;
+                        color: #838383;
+                        font-size: 12px;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.graphSummary {
+    p {
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        color: #838383;
+    }
+}
+
+.sectionHeader {
+    @include boxShadow;
+    background-color: lighten($main-white, 4);
+    margin-top: 15px;
+    margin-bottom: 5px;
+    height: $dashboardHeader;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .headerMainArea {
+        height: $dashboardHeader;
+        display: grid;
+        place-items: center start;
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+
+    .dateRange {
+        height: $dashboardHeader;
+        display: grid;
+        place-items: center;
+        // border-inline-end: 1px dashed #d1cfcf;
+        border-inline-start: 1px dashed #d1cfcf;
+
+        .ant-input {
+            border: none;
+
+            .ant-calendar-input {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .menuIcon {
+        height: $dashboardHeader;
+        display: grid;
+        place-items: center;
+    }
+}
+
+.singleValueHead {
+    place-items: center !important;
+}
+
+.singleValueIcon {
+    display: grid;
+    place-items: center;
+    color: #111f4d2d;
+    font-size: 48px;
+    padding-block-start: 15px;
+    padding-block-end: 15px;
+}
+
+.singleValueTxt {
+    display: grid;
+    place-items: center;
+    color: #838383;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.spinnerCont {
+    display: grid;
+    place-items: center;
+}

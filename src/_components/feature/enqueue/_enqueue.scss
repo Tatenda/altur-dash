@@ -1,0 +1,20 @@
+.enqueue {
+    padding-top: 60px;
+    height: 100vh;
+
+    .enqueueContainer {
+        -webkit-box-shadow: 0px 0px 3px -1px rgba(56, 56, 56, 1);
+        -moz-box-shadow: 0px 0px 3px -1px rgba(56, 56, 56, 1);
+        box-shadow: 0px 0px 3px -1px rgba(56, 56, 56, 1);
+        background-color: $main-white;
+        border-radius: 5px;
+    }
+}
+
+.formImg {
+    overflow: hidden;
+
+    img {
+        max-height: 500px;
+    }
+}

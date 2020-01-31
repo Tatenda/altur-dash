@@ -1,0 +1,20 @@
+.queueView {
+    height: 100vh;
+}
+
+.flemojiTV {
+    background-color: darken($main-white, 80);
+    height: 100vh;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    .tvContainer {
+        height: 100%;
+        overflow: hidden;
+        padding: 0;
+    }
+}
+
+.listHeader {
+    border-bottom: 1px dashed #d1cfcf;
+}
