@@ -13,12 +13,6 @@ const QueueView: React.FC = () => {
     const waitingList = queue
         .filter(x => (x.status !== 'cancel' && x.status !== 'absent' && x.status !== 'done'));
 
-    app.socket.on("FromAPI", (data: IListItem[]) => {
-        setQueue(data);
-    });
-
-
-
     return (
         <div className="row">
             <div className="col-12 queueView">

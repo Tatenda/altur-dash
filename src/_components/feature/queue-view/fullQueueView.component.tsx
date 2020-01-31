@@ -9,15 +9,15 @@ import { notification, Icon } from 'antd';
 const FullQueueView: React.FC = () => {
     const app = useContext(AppContext);
 
-    app.socket.on("onNotify", () => {
-        console.log('on notify');
-        notification.open({
-            message: 'Who\'s Next!',
-            description:
-                'We just finished with a client. May the next inline get ready.',
-            icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
-        });
-    });
+    // app.socket.on("onNotify", () => {
+    //     console.log('on notify');
+    //     notification.open({
+    //         message: 'Who\'s Next!',
+    //         description:
+    //             'We just finished with a client. May the next inline get ready.',
+    //         icon: <Icon type="smile" style={{ color: '#108ee9' }} />,
+    //     });
+    // });
 
     return (
         <div className="container-fluid">

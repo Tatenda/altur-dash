@@ -4,7 +4,7 @@ const AppContext = React.createContext({
     authenticated: true,
     lang: 'en',
     showHeader: true,
-    socket: {} as SocketIOClient.Socket
+    // socket: {} as SocketIOClient.Socket
 });
 
 export { AppContext };
