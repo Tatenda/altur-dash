@@ -5,10 +5,16 @@ import { Header, Dashboard, Candidates, Jobs, Applications } from '../..';
 import { ClickParam } from 'antd/lib/menu';
 import { history } from '../../../_helpers';
 import SubMenu from 'antd/lib/menu/SubMenu';
+import { authenticationService } from '../../../_services';
 
 const MainContainer: React.FC = () => {
 
     useEffect(() => { })
+
+    function logout() {
+        authenticationService.logout();
+        history.push('/login');
+    }
 
     const menuClick = (item: ClickParam) => {
         switch (item.key) {
@@ -20,6 +26,9 @@ const MainContainer: React.FC = () => {
                 break;
             case 'jobs-list':
                 history.push('/dashboard/jobs/list');
+                break;
+            case 'logout':
+                logout()
                 break;
             default:
                 history.push(`/dashboard/${item.key}`);

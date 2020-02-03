@@ -19,11 +19,6 @@ const App: React.FC = () => {
         authenticationService.currentUser.subscribe(x => setCurrentUser(x));
     });
 
-    function logout() {
-        authenticationService.logout();
-        history.push('/login');
-    }
-
     return (
         <AppContext.Provider value={
             {

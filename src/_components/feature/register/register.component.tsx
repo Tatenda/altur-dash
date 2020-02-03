@@ -19,21 +19,22 @@ const RegisterPage: React.FC<IProps> = ({ history, location }) => {
             <h2>Register</h2>
             <Formik
                 initialValues={{
+                    first_name: '',
+                    last_name: '',
                     email: '',
-                    username: '',
                     password: '',
                     confirmPassword: '',
-                    role: ''
                 }}
                 validationSchema={Yup.object().shape({
+                    first_name: Yup.string().required('First Name Required'),
+                    last_name: Yup.string().required('Last Name Required'),
                     email: Yup.string().email('Enter a valid email address.').required('Email Required'),
-                    username: Yup.string().required('Username is required'),
                     password: Yup.string().required('Password is required'),
                     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null]).required('Confirm Password is required')
                 })}
-                onSubmit={({ email, username, password, role }, { setStatus, setSubmitting }) => {
+                onSubmit={({ first_name, last_name, email, password }, { setStatus, setSubmitting }) => {
                     setStatus();
-                    const model = new RegisterModel(email, username, password, role);
+                    const model = new RegisterModel(email, email, password, first_name, last_name);
                     authenticationService.register(model)
                         .then(
                             user => {
@@ -48,9 +49,14 @@ const RegisterPage: React.FC<IProps> = ({ history, location }) => {
             >{({ errors, status, touched, isSubmitting }) => (
                 <Form>
                     <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <Field name="username" type="text" className={'form-control' + (errors.username && touched.username ? ' is-invalid' : '')} />
-                        <ErrorMessage name="username" component="div" className="invalid-feedback" />
+                        <label htmlFor="first_name">First Name</label>
+                        <Field name="first_name" type="text" className={'form-control' + (errors.first_name && touched.first_name ? ' is-invalid' : '')} />
+                        <ErrorMessage name="first_name" component="div" className="invalid-feedback" />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="last_name">Last Name</label>
+                        <Field name="last_name" type="text" className={'form-control' + (errors.last_name && touched.last_name ? ' is-invalid' : '')} />
+                        <ErrorMessage name="last_name" component="div" className="invalid-feedback" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="email">Email</label>

@@ -16,14 +16,14 @@ const TimeSummaryWidget: React.FC<IProps> = ({ WidgetTitle, Description, DateRan
     apiFilter.shopId = shopId;
     // apiFilter.servedById = '12342455224';
 
-    useEffect(() => {
-        // setData(null as unknown as []);
-        // queueService.filter(apiFilter)
-        //     .then(res => {
-        //         setData(res.data);
-        //     }, err => { })
-        //     .finally();
-    }, [DateRange, shopId]);
+    // useEffect(() => {
+    //     // setData(null as unknown as []);
+    //     // queueService.filter(apiFilter)
+    //     //     .then(res => {
+    //     //         setData(res.data);
+    //     //     }, err => { })
+    //     //     .finally();
+    // }, [DateRange, shopId]);
 
     if (apiData) {
         return (

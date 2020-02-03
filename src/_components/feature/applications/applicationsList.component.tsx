@@ -37,10 +37,6 @@ const ApplicationsList: React.FC = () => {
         }
     }
 
-    // app.socket.on("FromAPI", (data: IListItem[]) => {
-    //     setQueue(data);
-    // });
-
     useEffect(() => { })
 
     return (

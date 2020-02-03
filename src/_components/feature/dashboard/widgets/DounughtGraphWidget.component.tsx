@@ -57,7 +57,7 @@ const DounughtGraphWidget: React.FC<IWidgetProps> = ({ WidgetTitle, Description,
         setData([546, 467, 120]);
         setPercentCancelled(67);
         setPercentServed(32);
-    }, [apiFilter])
+    }, [])
 
     if (apiData) {
         return (

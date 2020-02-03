@@ -73,7 +73,7 @@ const LineGraphWidget: React.FC<IWidgetProps> = ({ WidgetTitle, Description, Dat
         //     });
         setGraphLabels(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']);
         setGraphData([63, 72, 70, 42, 81, 55, 78, 99, 121, 95, 113, 72]);
-    }, [apiFilter])
+    }, [])
 
     if (graphData) {
         return (

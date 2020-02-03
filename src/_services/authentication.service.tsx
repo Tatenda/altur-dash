@@ -3,6 +3,7 @@ import { handleResponse, authHeader } from '../_helpers';
 import { RegisterModel } from '../_models/register.model';
 
 const currentUserSubject = new BehaviorSubject(JSON.parse('' + localStorage.getItem('currentUser')));
+const api = process.env.REACT_APP_SERVER_URL;
 
 export const authenticationService = {
     login,
@@ -14,13 +15,15 @@ export const authenticationService = {
     delete: _delete
 };
 
-function login(username: string, password: string) {
+function login(email: string, password: string) {
+    console.log(email);
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     };
-    return fetch(`${process.env.REACT_APP_SERVER_URL}/users/authenticate`, requestOptions)
+    return fetch(`${api}auth/tokens`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -37,12 +40,13 @@ function logout() {
 }
 
 function register(model: RegisterModel) {
+    console.log(model);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(model)
     };
-    return fetch(`${process.env.REACT_APP_API_ENDPOINT}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${api}users`, requestOptions).then(handleResponse);
 }
 
 function update(user: any) {

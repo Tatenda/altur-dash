@@ -112,7 +112,6 @@ const MainSection: React.FC = () => {
                                                 GetResults={getAverageWaitingTime}
                                     />
                             </div>
-
                         </div>
                     </div>
                 </div>
