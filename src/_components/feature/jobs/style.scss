@@ -1,3 +1,6 @@
+@import "../../../variables";
+@import "../../../mxins";
+
 .formCont {
     height: calc(100% - 50px);
     overflow-y: scroll;
@@ -69,4 +72,124 @@
     height: calc(100vh - 80px);
     padding-block-start: 15px;
     overflow-y: scroll;
+}
+
+.candidateCont {
+    height: 100%;
+    overflow-y: scroll;
+    margin-top: 15px;
+
+    .candidateHead {
+        height: 120px;
+        padding-block-start: 15px;
+        padding-block-end: 15px;
+        border-block-end: 1px dashed #d1cfcf;
+
+        .candidateHeadImg {
+            height: 90px;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+
+            .candidateHeadImgCont {
+                width: 90px;
+            }
+
+            .candidateHeadMatch {
+                display: grid;
+                place-items: center;
+                font-size: 40px;
+                font-weight: 700;
+                color: #12A745;
+
+                p {
+                    margin-block-end: 0;
+                }
+            }
+        }
+
+        .candidateHeadName {
+            display: grid;
+            place-items: center start;
+            font-weight: 500;
+
+            p {
+                margin-block-end: 0;
+                font-size: 38px;
+
+                .city {
+                    font-size: 24px;
+                    color: rgb(155, 155, 155);
+                }
+            }
+        }
+    }
+
+    .candidateDesc {
+        padding-block-end: 15px;
+        padding-block-start: 15px;
+        border-block-end: 1px dashed #d1cfcf;
+        height: 150px;
+        overflow-y: scroll;
+
+        p {
+            font-size: 16px;
+            color: rgb(56, 56, 56);
+            font-weight: 400;
+            margin-bottom: 0;
+        }
+    }
+
+    .candidateSection {
+        padding-block-start: 15px;
+
+        .candidateSectionBody {
+            // background-color: rgb(253, 253, 253);
+            height: 220px;
+            border-radius: 10px;
+            overflow-y: scroll;
+            @include boxShadow;
+
+            .candidateSectionBodyHead {
+                border-bottom: 1px solid rgb(243, 243, 243);
+
+                p {
+                    margin-top: 15px;
+                    margin-bottom: 15px;
+                    font-size: 13px;
+                    font-weight: 700;
+                }
+            }
+
+            .candidateSectionBodyDesc {
+                ul {
+                    padding: 0;
+
+                    li {
+                        list-style: none;
+                        padding-block-start: 5px;
+                        padding-block-end: 5px;
+                        border-bottom: 1px solid rgb(243, 243, 243);
+
+
+                        .candidateSectionBodyDescImg {
+                            display: grid;
+                            place-items: center start;
+                        }
+
+                        .candidateSectionBodyDescTxt {
+                            display: grid;
+                            place-items: center start;
+
+                            p {
+                                margin-bottom: 0;
+                                font-size: 12px;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
