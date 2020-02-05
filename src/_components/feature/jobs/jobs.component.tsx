@@ -7,7 +7,7 @@ import { JobsCandidate } from './jobsCandidate.component';
 
 export const Jobs = () => {
     return (
-        <div className="col-10 jobBody">
+        <div className="col-12 jobBody">
             <div className="row">
                 <Route exact path="/dashboard/jobs/create" component={JobCreate} />
                 <Route exact path="/dashboard/jobs/list" component={JobList} />

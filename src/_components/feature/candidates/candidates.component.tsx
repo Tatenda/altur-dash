@@ -1,11 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { Table, Tag, Divider, Icon, Tooltip } from 'antd';
+import { Table, Tag, Divider, Icon, Tooltip, Button } from 'antd';
 import ColumnGroup from 'antd/lib/table/ColumnGroup';
 import Column from 'antd/lib/table/Column';
 import { PaginationConfig } from 'antd/lib/table';
 
-const Candidates: React.FC = () => {
+interface IProps {
+    history: any,
+    location: any,
+    match: any
+}
+
+const Candidates: React.FC<IProps> = ({ history, location, match }) => {
     const data = [
         {
             key: '1',
@@ -103,6 +109,11 @@ const Candidates: React.FC = () => {
             status: 'unlocked'
         }
     ];
+
+    const viewCandidate = () => {
+        history.push(`/dashboard/candidates/1`);
+    }
+
     const config = {
         bordered: false,
         loading: false,
@@ -122,12 +133,14 @@ const Candidates: React.FC = () => {
         hasData: true,
         tableLayout: undefined,
     };
+
     const pagination: PaginationConfig = {
         pageSize: 6,
         defaultCurrent: 1
     };
+
     return (
-        <div className="col-10 jobBody">
+        <div className="col-12 jobBody">
             <div className="row">
                 <div className="col-12">
                     <div className="containerBody col-12">
@@ -145,18 +158,7 @@ const Candidates: React.FC = () => {
                                 <Column title="Age" dataIndex="age" key="age" />
                                 <Column title="Location" dataIndex="location" key="location" />
                                 <Column
-                                    title="Status"
-                                    dataIndex="status"
-                                    key="status"
-                                    render={status => (
-                                        <Tooltip placement="right" title={status === 'locked' ? 'Click to unlock' : 'Unlocked'}>
-                                            <Icon
-                                                type={status === 'locked' ? 'lock' : 'unlock'}
-                                                style={status === 'locked' ? { fontWeight: 'bolder', color: '#e43a19' } : { fontWeight: 'bolder', color: '#12A745' }} />
-                                        </Tooltip>
-                                    )} />
-                                <Column
-                                    title="Tags"
+                                    title="Skills"
                                     dataIndex="tags"
                                     key="tags"
                                     render={tags => (
@@ -169,17 +171,29 @@ const Candidates: React.FC = () => {
                                         </span>
                                     )}
                                 />
-                                {/* <Column
+                                <Column
+                                    title="Status"
+                                    dataIndex="status"
+                                    key="status"
+                                    render={status => (
+                                        <Tooltip placement="right" title={status === 'locked' ? 'Click to unlock' : 'Unlocked'}>
+                                            <Icon
+                                                type={status === 'locked' ? 'lock' : 'unlock'}
+                                                style={status === 'locked' ? { fontWeight: 'bolder', color: '#e43a19' } : { fontWeight: 'bolder', color: '#12A745' }} />
+                                        </Tooltip>
+                                    )} />
+                                <Column
                                     title="Action"
                                     key="action"
                                     render={(text, record: any) => (
-                                        <span>
-                                            <a>Invite {record.lastName}</a>
-                                            <Divider type="vertical" />
-                                            <a>Delete</a>
-                                        </span>
+                                        <Button
+                                            type="ghost"
+                                            size="small"
+                                            onClick={viewCandidate}
+                                            style={{ color: '#e48119', borderColor: '#e48119' }}
+                                        >View</Button>
                                     )}
-                                /> */}
+                                />
                             </Table>
                         </div>
                     </div>

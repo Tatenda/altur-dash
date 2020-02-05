@@ -6,6 +6,7 @@ import { ClickParam } from 'antd/lib/menu';
 import { history } from '../../../_helpers';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { authenticationService } from '../../../_services';
+import { JobsCandidate } from '../jobs/jobsCandidate.component';
 
 const MainContainer: React.FC = () => {
 
@@ -92,10 +93,15 @@ const MainContainer: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <Route exact path="/dashboard" component={Dashboard} />
-                        <Route path="/dashboard/candidates" component={Candidates} />
-                        <Route path="/dashboard/applications" component={Applications} />
-                        <Route path="/dashboard/jobs" component={Jobs} />
+                        <div className="col-10">
+                            <div className="row">
+                                <Route exact path="/dashboard" component={Dashboard} />
+                                <Route exact path="/dashboard/candidates" component={Candidates} />
+                                <Route exact path="/dashboard/candidates/:id" component={JobsCandidate} />
+                                <Route path="/dashboard/applications" component={Applications} />
+                                <Route path="/dashboard/jobs" component={Jobs} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

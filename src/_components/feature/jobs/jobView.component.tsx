@@ -12,12 +12,27 @@ interface IProps {
 export const JobsView: React.FC<IProps> = ({ history, location, match }) => {
     const [id] = useState(match.params.id);
     let [job, setJob] = useState({} as unknown as IJobModel);
+    const viewCandidate = () => {
+        history.push(`/dashboard/jobs/id/${id}/candidate`);
+    }
     const columns = [
         { title: 'Name', dataIndex: 'name', key: 'name' },
         { title: 'Surname', dataIndex: 'surname', key: 'surname' },
         { title: 'Gender', dataIndex: 'gender', key: 'gender' },
         { title: 'Match', dataIndex: 'match', key: 'match' },
         { title: 'Date', dataIndex: 'createdAt', key: 'createdAt' },
+        {
+            title: '',
+            dataIndex: 'candidate',
+            key: 'candidate',
+            render: (candidate: string) => (
+                <Button
+                    type="ghost"
+                    size="small"
+                    onClick={viewCandidate}
+                    style={{ color: '#e48119', borderColor: '#e48119' }}
+                >View</Button>)
+        },
     ];
 
     const data = [];
@@ -28,7 +43,8 @@ export const JobsView: React.FC<IProps> = ({ history, location, match }) => {
             surname: 'Mbalula',
             gender: 'Unknown',
             match: '80%',
-            createdAt: '2014-12-24 23:12:00',
+            createdAt: '2014-12-24',
+            description: 'Maintain the quality management system to ISO 9001 requirement Prepare Quality Assurance policy manuals, ISO mandatory procedures and applicable instructions by using ISO 9001 and business area requirements as guidelines Introduce, document and maintain suitable and effective document management systems into all departments and monitor performance and conformance Evaluate and'
         });
     }
 
@@ -82,7 +98,9 @@ export const JobsView: React.FC<IProps> = ({ history, location, match }) => {
                         <Table
                             className="components-table-demo-nested"
                             columns={columns}
-                            expandedRowRender={record => <p style={{ margin: 0 }}>{`${record.name} ${record.surname}`}</p>}
+                            expandedRowRender={record => (
+                                <p style={{ margin: 0 }}>{`${record.description}`}</p>
+                            )}
                             dataSource={data}
                         />
                     </div>

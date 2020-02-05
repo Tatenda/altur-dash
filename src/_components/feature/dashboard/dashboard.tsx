@@ -3,7 +3,7 @@ import { MainSection } from './MainSection.component';
 
 const Dashboard: React.FC = () => {
     return (
-        <div className="col-10">
+        <div className="col-12">
             <div className="row">
                 <div className="col-12">
                     <MainSection />

@@ -15,7 +15,6 @@ export const JobList: React.FC = () => {
 
     const editJob = (id: string) => {
         history.push(`/dashboard/jobs/id/${id}`);
-        console.log(id);
     }
 
     const deleteJob = (id: string) => {
