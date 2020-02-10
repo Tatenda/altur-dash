@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Icon, Menu } from 'antd';
+import { Icon, Menu, Dropdown } from 'antd';
 import { Route } from 'react-router-dom';
-import { Header, Dashboard, Candidates, Jobs, Applications } from '../..';
+import { Header, Dashboard, Candidates, Jobs, Applications, Company } from '../..';
 import { ClickParam } from 'antd/lib/menu';
 import { history } from '../../../_helpers';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -17,6 +17,19 @@ const MainContainer: React.FC = () => {
         history.push('/login');
     }
 
+    const handleMenuClick = (e: any) => {
+        if (e.key === '3') {
+        }
+    };
+
+    const menu = (
+        <Menu onClick={handleMenuClick}>
+            <Menu.Item key="1">All</Menu.Item>
+            <Menu.Item key="3">Accepted</Menu.Item>
+            <Menu.Item key="2">Rejected</Menu.Item>
+        </Menu>
+    )
+
     const menuClick = (item: ClickParam) => {
         switch (item.key) {
             case 'dashboard':
@@ -27,6 +40,12 @@ const MainContainer: React.FC = () => {
                 break;
             case 'jobs-list':
                 history.push('/dashboard/jobs/list');
+                break;
+            case 'company-create':
+                history.push('/dashboard/company/create');
+                break;
+            case 'company-list':
+                history.push('/dashboard/company/list');
                 break;
             case 'logout':
                 logout()
@@ -63,10 +82,23 @@ const MainContainer: React.FC = () => {
                                                 <Icon type="user" />
                                                 <span>Candidates</span>
                                             </Menu.Item>
-                                            {/* <Menu.Item key="applications">
-                                                <Icon type="pie-chart" />
-                                                <span>Applications</span>
-                                            </Menu.Item> */}
+                                            <SubMenu key="company"
+                                                title={
+                                                    <span>
+                                                        <Icon type="profile" />
+                                                        <span>Company</span>
+                                                    </span>
+                                                }
+                                            >
+                                                <Menu.Item key="company-create">
+                                                    <Icon type="pie-chart" />
+                                                    <span>Create</span>
+                                                </Menu.Item>
+                                                <Menu.Item key="company-list">
+                                                    <Icon type="pie-chart" />
+                                                    <span>List</span>
+                                                </Menu.Item>
+                                            </SubMenu>
                                             <SubMenu key="jobs"
                                                 title={
                                                     <span>
@@ -94,12 +126,28 @@ const MainContainer: React.FC = () => {
                             </div>
                         </div>
                         <div className="col-10">
+                            <div className="col-12 sectionHeader">
+                                <div className="row">
+                                    <div className="col-1 menuIcon">
+                                        <Dropdown overlay={menu} placement="bottomRight">
+                                            <Icon type="more" />
+                                        </Dropdown>
+                                    </div>
+                                    <div className="col-7 headerMainArea">
+                                        <p>All</p>
+                                    </div>
+                                    <div className="col dateRange">
+
+                                    </div>
+                                </div>
+                            </div>
                             <div className="row">
                                 <Route exact path="/dashboard" component={Dashboard} />
                                 <Route exact path="/dashboard/candidates" component={Candidates} />
                                 <Route exact path="/dashboard/candidates/:id" component={JobsCandidate} />
-                                <Route path="/dashboard/applications" component={Applications} />
+                                <Route exact path="/dashboard/applications" component={Applications} />
                                 <Route path="/dashboard/jobs" component={Jobs} />
+                                <Route path="/dashboard/company" component={Company} />
                             </div>
                         </div>
                     </div>

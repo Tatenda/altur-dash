@@ -4,6 +4,8 @@ import { authenticationService } from '../../../_services';
 const HomePage: React.FC = () => {
     // eslint-disable-next-line
     const [currentUser, setCurrentUser] = useState(authenticationService.currentUserValue);
+    console.log(currentUser);
+
 
     useEffect(() => {
     });

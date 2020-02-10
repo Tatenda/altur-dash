@@ -33,8 +33,6 @@ body {
 }
 
 .App-header {
-    // background-color: #282c34;
-    // background-color: $main-black !important;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -72,7 +70,6 @@ body {
 }
 
 .listCont {
-    // margin-top: 15px;
     margin-bottom: 15px;
     padding: 0 0 15px 0;
     height: 100%;
@@ -110,7 +107,7 @@ body {
 }
 
 .containerBody {
-    height: calc(100vh - 80px) !important;
+    height: calc(100vh - 140px) !important;
     @include boxShadow;
     background-color: lighten($main-white, 4);
     margin-top: 10px;

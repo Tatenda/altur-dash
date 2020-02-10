@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-
 import { authenticationService } from '../../_services';
 
 interface IProps {
@@ -12,12 +11,10 @@ interface IProps {
 export const PrivateRoute: FunctionComponent<IProps> = ({ component: Component, ...rest }) => (
     <Route {...rest} render={(props: any) => {
         const currentUser = authenticationService.currentUserValue;
-        if (!currentUser) {
-            // not logged in so redirect to login page with the return url
+        if (!currentUser || typeof currentUser === 'string') {
+            authenticationService.logout();
             return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
         }
-
-        // authorised so return component
         return <Component {...props} />
     }} />
 )

@@ -8,10 +8,9 @@ interface IProps {
     location: any
 }
 
-
 const LoginPage: React.FC<IProps> = ({ history, location }) => {
     if (authenticationService.currentUserValue) {
-        history.push('/');
+        history.push('/dashboard');
     }
 
     return (
@@ -31,10 +30,11 @@ const LoginPage: React.FC<IProps> = ({ history, location }) => {
                     authenticationService.login(username, password)
                         .then(
                             user => {
-                                const { from } = location.state || { from: { pathname: "/" } };
+                                const { from } = location.state || { from: { pathname: "/dashboard" } };
                                 history.push(from);
                             },
                             error => {
+                                // handle thrown error here.
                                 setSubmitting(false);
                             }
                         );

@@ -9,3 +9,4 @@ export * from './feature/applications/applications.component';
 export * from './feature/dashboard/dashboard';
 export * from './feature/candidates/candidates.component';
 export * from './feature/jobs/jobs.component';
+export * from './feature/company/company.component';

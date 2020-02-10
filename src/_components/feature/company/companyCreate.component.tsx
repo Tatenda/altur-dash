@@ -1,43 +1,52 @@
-import React from 'react';
-import { Form, Input, Button, Select, DatePicker, Radio } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Select, Button, Input } from 'antd';
 import { FormComponentProps } from "antd/lib/form";
+import { CompanyCreateModel } from '../../../_models/company.model';
 import TextArea from 'antd/lib/input/TextArea';
-import './style.scss';
-import { JobCreateModel, IJobCreateModel } from '../../../_models/jobs.model';
-import { jobsService } from '../../../_services/jobs.service';
+import { categoryService } from '../../../_services/categories.service';
+import { ICategory } from '../../../_models/category.model';
+import { IChartBot } from '../../../_models/chatbots.model';
+import { chatbotService } from '../../../_services/chatbot.service';
+import { authenticationService } from '../../../_services';
 
 type FormProps = FormComponentProps;
 
-const JobCreateForm = (props: FormProps): JSX.Element => {
+const CompanyCreateForm = (props: FormProps): JSX.Element => {
     const { getFieldDecorator } = props.form;
-    const createModel = {} as IJobCreateModel;
-    // const { Option } = Select;
-
     const children: string[] = [];
+    const [categoties, setCategoties] = useState([] as unknown as ICategory[]);
+    const [chatbots, setChatbots] = useState([] as unknown as IChartBot[]);
+
+    useEffect(() => {
+        categoryService.getCategories()
+            .then((res: ICategory[]) => setCategoties(res))
+            .catch(err => console.error);
+        chatbotService.getChatbots()
+            .then((res: IChartBot[]) => setChatbots(res))
+            .catch(err => console.error);
+    }, []);
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
         props.form.validateFields((err, values) => {
+            console.log(authenticationService.currentUserValue);
+
             const modelVals = {
                 ...values,
-                closing_date: values['closingDate'].format('YYYY-MM-DD'),
+                user: authenticationService.currentUserValue
             }
             if (!err) {
-                const model = new JobCreateModel(modelVals);
-                jobsService.addJob(model)
-                    .then(res => {
-                        console.log(res);
-                    })
-                console.log(modelVals);
+                const model = new CompanyCreateModel(modelVals);
+                // companyService.addCompany(model)
+                //     .then(res => {
+                //         console.log(res);
+                //     })
+                console.log(model);
             }
         });
     };
 
     function handleChange(value: string) {
-    }
-
-    function onChange(date: any, dateString: string) {
-        createModel.closing_date = dateString;
     }
 
     const formItemLayout = {
@@ -64,15 +73,16 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
         },
     };
 
+    const { Option } = Select;
+
     return (
         <div className="col-12">
             <div className="containerBody col-12">
                 <div className="col-12 graphContainerHeader">
-                    <p>Create Job</p>
+                    <p>Create Company</p>
                 </div>
                 <div className="col-12 mainBody formCont">
                     <Form {...formItemLayout} onSubmit={handleSubmit}>
-
                         <Form.Item
                             label="Title"
                             labelAlign="left"
@@ -92,15 +102,11 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                         </Form.Item>
 
                         <Form.Item
-                            label="Company"
+                            label="Address"
                             labelAlign="left"
                         >
-                            {getFieldDecorator('company', {
-                                rules: [{
-                                    required: true,
-                                    message: 'Please company name!',
-                                    whitespace: true
-                                }],
+                            {getFieldDecorator('address', {
+                                rules: [],
                             })(<Input />)}
                         </Form.Item>
 
@@ -134,52 +140,63 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                             labelAlign="left"
                         >
                             {getFieldDecorator('category', {
-                                rules: [{ required: true, message: 'Please enter Job Category!', whitespace: true }],
-                            })(<Input />)}
+                                rules: [{ required: true, message: 'Please select company category!', whitespace: true }],
+                            })(
+                                <Select
+                                    placeholder="Select a Category"
+                                // onChange={onChange}
+                                >
+                                    {
+                                        categoties.map((category: ICategory) => <Option key={category.id} value={category.id}>{category.title}</Option>)
+                                    }
+                                </Select>
+                            )}
                         </Form.Item>
 
                         <Form.Item
-                            label="Location"
+                            label="Chat Bot"
                             labelAlign="left"
                         >
-                            {getFieldDecorator('location', {
-                                rules: [{ required: true, message: 'Please enter Job Location!', whitespace: true }],
+                            {getFieldDecorator('chatbot', {
+                                rules: [{ required: true, message: 'Please select chatbot!', whitespace: true }],
+                            })(
+                                <Select
+                                    placeholder="Select a Chatbot"
+                                >
+                                    {
+                                        chatbots.map((bot: IChartBot) => <Option key={bot.id} value={bot.id}>{bot.title}</Option>)
+                                    }
+                                </Select>
+                            )}
+                        </Form.Item>
+
+                        <Form.Item
+                            label="City"
+                            labelAlign="left"
+                        >
+                            {getFieldDecorator('city', {
+                                rules: [{ required: true, message: 'Please enter city!', whitespace: true }],
                             })(<Input />)}
                         </Form.Item>
 
                         <Form.Item
-                            label="Job Description"
+                            label="Province"
+                            labelAlign="left"
+                        >
+                            {getFieldDecorator('province', {
+                                rules: [],
+                            })(<Input />)}
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Description"
                             labelAlign="left">
                             {getFieldDecorator('description', {
-                                rules: [{ required: true, message: 'Job Description is required', whitespace: true }],
+                                rules: [],
                             })(<TextArea
-                                placeholder="Job Description"
+                                placeholder="Company Description"
                                 autoSize={{ minRows: 2, maxRows: 6 }}
                             />)}
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Closing Date"
-                            labelAlign="left"
-                        >
-                            {getFieldDecorator('closingDate', {
-                                rules: [
-                                    { type: 'object', required: true, message: 'Please select closing date!' }
-                                ],
-                            })(<DatePicker onChange={onChange} />)}
-                        </Form.Item>
-
-                        <Form.Item
-                            label="Published?"
-                            labelAlign="left">
-                            {getFieldDecorator('published', {
-                                initialValue: false
-                            })(
-                                <Radio.Group size="large" buttonStyle="solid">
-                                    <Radio.Button value={true}>Yes</Radio.Button>
-                                    <Radio.Button value={false}>No</Radio.Button>
-                                </Radio.Group>
-                            )}
                         </Form.Item>
 
                         <Form.Item
@@ -205,4 +222,4 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
     );
 }
 
-export const JobCreate = Form.create()(JobCreateForm);
+export const CompanyCreate = Form.create()(CompanyCreateForm);

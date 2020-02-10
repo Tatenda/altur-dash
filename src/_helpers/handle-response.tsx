@@ -1,25 +1,18 @@
 import { authenticationService } from '../_services';
 
-export function handleResponse(response: Response) {
+export function handleResponse(response: any) {
     try {
-        return response.text().then((text: string) => {
-            // console.log(text);
-
-            const data = text && JSON.parse(text);
+        return response.json().then((res: any) => {
             if (!response.ok) {
                 if ([401, 403].indexOf(response.status) !== -1) {
-                    // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
-                    // authenticationService.logout();
-                    // window.location.reload(true);
+                    authenticationService.logout();
+                    window.location.reload(true);
                 }
-
-                const error = (data && data.message) || response.statusText;
-                return error;
+                throw res;
             }
-            return data;
+            return res;
         });
     } catch (error) {
         console.log(error);
-
     }
 }

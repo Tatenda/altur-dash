@@ -1,8 +1,9 @@
 import { BehaviorSubject } from 'rxjs';
 import { handleResponse, authHeader } from '../_helpers';
 import { RegisterModel } from '../_models/register.model';
+const jwtDecode = require('jwt-decode');
 
-const currentUserSubject = new BehaviorSubject(JSON.parse('' + localStorage.getItem('currentUser')));
+const currentUserSubject = new BehaviorSubject(JSON.parse('' + localStorage.getItem('altur')));
 const api = process.env.REACT_APP_SERVER_URL;
 
 export const authenticationService = {
@@ -16,8 +17,6 @@ export const authenticationService = {
 };
 
 function login(email: string, password: string) {
-    console.log(email);
-
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -26,21 +25,19 @@ function login(email: string, password: string) {
     return fetch(`${api}auth/tokens`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
+            localStorage.setItem('altur', JSON.stringify(jwtDecode(user.token)));
             currentUserSubject.next(user);
             return user;
+        }, error => {
+            return Promise.reject(error);
         });
 }
-
 function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('altur');
     currentUserSubject.next(null);
 }
 
 function register(model: RegisterModel) {
-    console.log(model);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

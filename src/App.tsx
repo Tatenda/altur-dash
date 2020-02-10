@@ -37,7 +37,7 @@ const App: React.FC = () => {
                                 <Route path="/register" component={RegisterPage} />
                                 <PrivateRoute exact path="/enqueue" component={Enqueue} />
                                 <PrivateRoute exact path="/queue-view" component={FullQueueView} />
-                                <Route path="/dashboard" component={MainContainer} />
+                                <PrivateRoute path="/dashboard" component={MainContainer} />
                             </ErrorBoundary>
                         </div>
                     </div>
@@ -46,6 +46,5 @@ const App: React.FC = () => {
         </AppContext.Provider>
     );
 }
-
 
 export default App;

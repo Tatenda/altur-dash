@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { Table, Tag, Divider, Icon, Tooltip, Button } from 'antd';
-import ColumnGroup from 'antd/lib/table/ColumnGroup';
+import { Table, Tag, Icon, Tooltip, Button } from 'antd';
 import Column from 'antd/lib/table/Column';
 import { PaginationConfig } from 'antd/lib/table';
 
@@ -114,89 +113,64 @@ const Candidates: React.FC<IProps> = ({ history, location, match }) => {
         history.push(`/dashboard/candidates/1`);
     }
 
-    const config = {
-        bordered: false,
-        loading: false,
-        pagination: {
-            total: 50,
-            showTotal: `Total 50 items`,
-            pageSize: 8,
-            defaultCurrent: 1
-        },
-        size: 'default',
-        expandedRowRender: false,
-        title: undefined,
-        showHeader: true,
-        footer: false,
-        rowSelection: {},
-        scroll: undefined,
-        hasData: true,
-        tableLayout: undefined,
-    };
-
     const pagination: PaginationConfig = {
         pageSize: 6,
         defaultCurrent: 1
     };
 
     return (
-        <div className="col-12 jobBody">
-            <div className="row">
-                <div className="col-12">
-                    <div className="containerBody col-12">
-                        <div className="col-12 graphContainerHeader">
-                            <p>Candidates</p>
-                        </div>
-                        <div className="col-12 mainBody">
-                            <Table
-                                dataSource={data}
-                                bordered={true}
-                                scroll={{ y: 350 }}
-                                pagination={pagination}>
-                                <Column title="First Name" dataIndex="firstName" key="firstName" />
-                                <Column title="Last Name" dataIndex="lastName" key="lastName" />
-                                <Column title="Age" dataIndex="age" key="age" />
-                                <Column title="Location" dataIndex="location" key="location" />
-                                <Column
-                                    title="Skills"
-                                    dataIndex="tags"
-                                    key="tags"
-                                    render={tags => (
-                                        <span>
-                                            {tags.map((tag: string) => (
-                                                <Tag color="blue" key={tag}>
-                                                    {tag}
-                                                </Tag>
-                                            ))}
-                                        </span>
-                                    )}
-                                />
-                                <Column
-                                    title="Status"
-                                    dataIndex="status"
-                                    key="status"
-                                    render={status => (
-                                        <Tooltip placement="right" title={status === 'locked' ? 'Click to unlock' : 'Unlocked'}>
-                                            <Icon
-                                                type={status === 'locked' ? 'lock' : 'unlock'}
-                                                style={status === 'locked' ? { fontWeight: 'bolder', color: '#e43a19' } : { fontWeight: 'bolder', color: '#12A745' }} />
-                                        </Tooltip>
-                                    )} />
-                                <Column
-                                    title="Action"
-                                    key="action"
-                                    render={(text, record: any) => (
-                                        <Button
-                                            type="ghost"
-                                            size="small"
-                                            onClick={viewCandidate}
-                                            style={{ color: '#e48119', borderColor: '#e48119' }}
-                                        >View</Button>
-                                    )}
-                                />
-                            </Table>
-                        </div>
-                    </div>
+        <div className="col-12">
+            <div className="containerBody col-12">
+                <div className="col-12 graphContainerHeader">
+                    <p>Candidates</p>
+                </div>
+                <div className="col-12 mainBody">
+                    <Table
+                        dataSource={data}
+                        bordered={true}
+                        pagination={pagination}>
+                        <Column title="First Name" dataIndex="firstName" key="firstName" />
+                        <Column title="Last Name" dataIndex="lastName" key="lastName" />
+                        <Column title="Age" dataIndex="age" key="age" />
+                        <Column title="Location" dataIndex="location" key="location" />
+                        <Column
+                            title="Skills"
+                            dataIndex="tags"
+                            key="tags"
+                            render={tags => (
+                                <span>
+                                    {tags.map((tag: string) => (
+                                        <Tag color="blue" key={tag}>
+                                            {tag}
+                                        </Tag>
+                                    ))}
+                                </span>
+                            )}
+                        />
+                        <Column
+                            title="Status"
+                            dataIndex="status"
+                            key="status"
+                            render={status => (
+                                <Tooltip placement="right" title={status === 'locked' ? 'Click to unlock' : 'Unlocked'}>
+                                    <Icon
+                                        type={status === 'locked' ? 'lock' : 'unlock'}
+                                        style={status === 'locked' ? { fontWeight: 'bolder', color: '#e43a19' } : { fontWeight: 'bolder', color: '#12A745' }} />
+                                </Tooltip>
+                            )} />
+                        <Column
+                            title="Action"
+                            key="action"
+                            render={(text, record: any) => (
+                                <Button
+                                    type="ghost"
+                                    size="small"
+                                    onClick={viewCandidate}
+                                    style={{ color: '#e48119', borderColor: '#e48119' }}
+                                >View</Button>
+                            )}
+                        />
+                    </Table>
                 </div>
             </div>
         </div>
