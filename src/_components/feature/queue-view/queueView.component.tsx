@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { authenticationService } from '../../../_services';
 import { useGetQueue } from '../../../_hooks/getQueue.hook';
 import { Icon, Result, Spin } from 'antd';
-import { AppContext } from '../../../_hooks/showHeader.context';
+import { AppContext } from '../../../_hooks/App.context';
 
 const QueueView: React.FC = () => {
     // eslint-disable-next-line

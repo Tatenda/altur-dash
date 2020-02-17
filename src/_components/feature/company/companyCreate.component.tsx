@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Select, Button, Input } from 'antd';
+import { Form, Select, Button, Input, message } from 'antd';
 import { FormComponentProps } from "antd/lib/form";
-import { CompanyCreateModel } from '../../../_models/company.model';
+import { CompanyCreateModel, ICompanyModel } from '../../../_models/company.model';
 import TextArea from 'antd/lib/input/TextArea';
 import { categoryService } from '../../../_services/categories.service';
 import { ICategory } from '../../../_models/category.model';
 import { IChartBot } from '../../../_models/chatbots.model';
 import { chatbotService } from '../../../_services/chatbot.service';
 import { authenticationService } from '../../../_services';
+import { companyService } from '../../../_services/company.service';
 
 type FormProps = FormComponentProps;
 
@@ -28,20 +29,23 @@ const CompanyCreateForm = (props: FormProps): JSX.Element => {
 
     const handleSubmit = (e: any) => {
         e.preventDefault();
+        const key = 'updatable';
         props.form.validateFields((err, values) => {
             console.log(authenticationService.currentUserValue);
-
             const modelVals = {
                 ...values,
-                user: authenticationService.currentUserValue
+                user: authenticationService.currentUserValue.id
             }
             if (!err) {
                 const model = new CompanyCreateModel(modelVals);
-                // companyService.addCompany(model)
-                //     .then(res => {
-                //         console.log(res);
-                //     })
-                console.log(model);
+                message.loading({ content: 'Saving Company...', key });
+                companyService.addCompany(model)
+                    .then(res => {
+                        message.success({ content: 'Company Successfully Saved!', key, duration: 2 });
+                        props.form.resetFields();
+                    }, err => {
+                        message.error({ content: err.message, key, duration: 2 });
+                    });
             }
         });
     };

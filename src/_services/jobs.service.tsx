@@ -10,10 +10,7 @@ const addJob = (model: JobCreateModel) => {
         body: JSON.stringify(model)
     };
     return fetch(`${api}jobs`, requestOptions)
-        .then(handleResponse)
-        .catch(err => {
-            console.log(err);
-        });
+        .then(handleResponse);
 }
 
 const getJobs = () => {

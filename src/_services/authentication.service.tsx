@@ -32,6 +32,7 @@ function login(email: string, password: string) {
             return Promise.reject(error);
         });
 }
+
 function logout() {
     localStorage.removeItem('altur');
     currentUserSubject.next(null);

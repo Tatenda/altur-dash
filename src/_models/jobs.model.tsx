@@ -15,6 +15,8 @@ export interface IJobCreateModel {
     closing_date: string;
     email: string;
     website: string;
+    organisation: string;
+    user: string;
 }
 
 export class JobCreateModel {
@@ -31,6 +33,8 @@ export class JobCreateModel {
     closing_date: string;
     email: string;
     website: string;
+    organisation: string;
+    user: string;
 
     constructor(model: IJobCreateModel) {
         this.title = model && model.title;
@@ -39,13 +43,15 @@ export class JobCreateModel {
         this.description = model && model.description;
         this.keywords = model && model.keywords;
         this.company = model && model.company;
-        this.chatbot = "altur";
+        this.chatbot = model && model.chatbot;
         this.published = model && model.published;
         this.category = model && model.category;
         this.location = model && model.location;
         this.closing_date = model && model.closing_date;
         this.email = model && model.email;
         this.website = model && model.website;
+        this.organisation = model && model.organisation;
+        this.user = model && model.user;
     }
 }
 
@@ -66,4 +72,5 @@ export interface IJobModel {
     updated_at: string;
     email: string;
     website: string;
+    user: string;
 }

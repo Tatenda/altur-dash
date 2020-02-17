@@ -13,7 +13,7 @@ export const JobList: React.FC = () => {
         })
     }, []);
 
-    const editJob = (id: string) => {
+    const viewJob = (id: string) => {
         history.push(`/dashboard/jobs/id/${id}`);
     }
 
@@ -54,7 +54,7 @@ export const JobList: React.FC = () => {
                                                                     shape="circle"
                                                                     icon="folder-open"
                                                                     type="ghost"
-                                                                    onClick={() => { editJob(job.id) }}
+                                                                    onClick={() => { viewJob(job.id) }}
                                                                     style={{ color: '#12A745', border: 'none' }} />
                                                             </Tooltip>
                                                         </div>

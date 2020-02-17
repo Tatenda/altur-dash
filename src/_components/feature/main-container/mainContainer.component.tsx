@@ -1,16 +1,30 @@
-import React, { useEffect } from 'react';
-import { Icon, Menu, Dropdown } from 'antd';
+import React, { useEffect, useState, useContext } from 'react';
+import { Icon, Menu, Dropdown, Select } from 'antd';
 import { Route } from 'react-router-dom';
 import { Header, Dashboard, Candidates, Jobs, Applications, Company } from '../..';
 import { ClickParam } from 'antd/lib/menu';
 import { history } from '../../../_helpers';
 import SubMenu from 'antd/lib/menu/SubMenu';
-import { authenticationService } from '../../../_services';
+import { authenticationService, userService } from '../../../_services';
 import { JobsCandidate } from '../jobs/jobsCandidate.component';
+import { IOrganisation } from '../../../_models/organisation.model';
+import { OrganisationContext } from '../../../_hooks/Organisation.context';
 
 const MainContainer: React.FC = () => {
+    const { Option } = Select;
+    const user = authenticationService.currentUserValue;
+    const [org, setOrg] = useState([] as unknown as IOrganisation[]);
+    const organisationContext = useContext(OrganisationContext);
 
-    useEffect(() => { })
+    useEffect(() => {
+        userService
+            .getUserOrganisations(user)
+            .then((res: any[]) => {
+                const orgz = res.map(x => x.organisation) as IOrganisation[];
+                setOrg(orgz);
+                organisationContext.dispatch(orgz[0]);
+            });
+    }, [user]);
 
     function logout() {
         authenticationService.logout();
@@ -21,6 +35,10 @@ const MainContainer: React.FC = () => {
         if (e.key === '3') {
         }
     };
+
+    function onChange(value: string) {
+        organisationContext.dispatch(org.find(x => x.id === value));
+    }
 
     const menu = (
         <Menu onClick={handleMenuClick}>
@@ -54,7 +72,6 @@ const MainContainer: React.FC = () => {
                 history.push(`/dashboard/${item.key}`);
                 break;
         }
-
     }
 
     return (
@@ -74,6 +91,18 @@ const MainContainer: React.FC = () => {
                                             onClick={menuClick}
                                             style={{ backgroundColor: '#fcfcfc', height: '100vh' }}
                                         >
+                                            <Select
+                                                showSearch
+                                                value={organisationContext.organisationState.id}
+                                                style={{ width: 200, marginLeft: '15px', marginTop: '15px' }}
+                                                placeholder="Select Organisation"
+                                                optionFilterProp="children"
+                                                onChange={onChange}
+                                            >
+                                                {
+                                                    org.map(o => <Option key={o.id} value={o.id}>{o.title}</Option>)
+                                                }
+                                            </Select>
                                             <Menu.Item key="dashboard">
                                                 <Icon type="dashboard" />
                                                 <span>Dashboard</span>
@@ -120,7 +149,12 @@ const MainContainer: React.FC = () => {
                                                 <Icon type="inbox" />
                                                 <span>Log Out</span>
                                             </Menu.Item>
+                                            <Menu.Item key="here">
+                                                <Icon type="inbox" />
+                                                <span>{organisationContext.organisationState.title}</span>
+                                            </Menu.Item>
                                         </Menu>
+
                                     </div>
                                 </div>
                             </div>
@@ -137,7 +171,7 @@ const MainContainer: React.FC = () => {
                                         <p>All</p>
                                     </div>
                                     <div className="col dateRange">
-
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>

@@ -12,7 +12,7 @@ export const Company = () => {
                 <Route exact path="/dashboard/company" component={CompanyList} />
                 <Route exact path="/dashboard/company/list" component={CompanyList} />
                 <Route exact path="/dashboard/company/create" component={CompanyCreate} />
-                <Route exact path="/dashboard/company/profile" component={CompanyProfile} />
+                <Route exact path="/dashboard/company/:id/profile" component={CompanyProfile} />
             </div>
         </div>
     );

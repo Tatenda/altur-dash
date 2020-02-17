@@ -16,6 +16,25 @@ const addCompany = (model: CompanyCreateModel) => {
         });
 }
 
+const getCompany = () => {
+    const requestOptions = { method: 'GET', headers: authHeader() } as RequestInit;
+    return fetch(`${api}companies`, requestOptions).then(handleResponse);
+}
+
+const getCompanyById = (id: string) => {
+    const requestOptions = { method: 'GET', headers: authHeader() } as RequestInit;
+    return fetch(`${api}companies/${id}`, requestOptions).then(handleResponse);
+}
+
+const deleteCompany = (id: string) => {
+    const requestOptions = { method: 'DELETE', headers: authHeader() } as RequestInit;
+    return fetch(`${api}companies/${id}`, requestOptions).then(handleResponse);
+}
+
+
 export const companyService = {
-    addCompany
+    addCompany,
+    getCompany,
+    getCompanyById,
+    deleteCompany
 }

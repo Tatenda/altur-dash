@@ -1,34 +1,69 @@
-import React from 'react';
-import { Form, Input, Button, Select, DatePicker, Radio } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, Select, DatePicker, Radio, message } from 'antd';
 import { FormComponentProps } from "antd/lib/form";
 import TextArea from 'antd/lib/input/TextArea';
 import './style.scss';
 import { JobCreateModel, IJobCreateModel } from '../../../_models/jobs.model';
 import { jobsService } from '../../../_services/jobs.service';
+import { ICategory } from '../../../_models/category.model';
+import { categoryService } from '../../../_services/categories.service';
+import { companyService } from '../../../_services/company.service';
+import { ICompanyModel } from '../../../_models/company.model';
+import { userService, authenticationService } from '../../../_services';
+import { IOrganisation } from '../../../_models/organisation.model';
+
 
 type FormProps = FormComponentProps;
 
 const JobCreateForm = (props: FormProps): JSX.Element => {
     const { getFieldDecorator } = props.form;
     const createModel = {} as IJobCreateModel;
-    // const { Option } = Select;
+    const [categories, setCategories] = useState([] as unknown as ICategory[]);
+    const [companies, setCompanies] = useState([] as unknown as ICompanyModel[]);
+    const { Option } = Select;
+    const [org, setOrg] = useState([] as unknown as IOrganisation[]);
+    const user = authenticationService.currentUserValue;
 
     const children: string[] = [];
 
+    useEffect(() => {
+        categoryService.getCategories()
+            .then((res: ICategory[]) => setCategories(res))
+            .catch(err => console.error);
+        companyService.getCompany()
+            .then((res: ICompanyModel[]) => setCompanies(res))
+            .catch(err => console.error);
+    }, []);
+
+    useEffect(() => {
+        userService
+            .getUserOrganisations(user)
+            .then((res: any[]) => {
+                const orgz = res.map(x => x.organisation) as IOrganisation[];
+                setOrg(orgz);
+            });
+    }, [user]);
+
     const handleSubmit = (e: any) => {
         e.preventDefault();
+        const key = 'updatable';
         props.form.validateFields((err, values) => {
             const modelVals = {
                 ...values,
-                closing_date: values['closingDate'].format('YYYY-MM-DD'),
+                closing_date: new Date(values['closingDate']).toISOString(),
+                chatbot: "5e3fbe33e8e69e476d6b784d",
+                user: user.id
             }
             if (!err) {
-                const model = new JobCreateModel(modelVals);
+                const model = new JobCreateModel({ ...modelVals });
+                message.loading({ content: 'Saving Job...', key });
                 jobsService.addJob(model)
                     .then(res => {
-                        console.log(res);
-                    })
-                console.log(modelVals);
+                        message.success({ content: 'Job Successfully Saved!', key, duration: 2 });
+                        props.form.resetFields();
+                    }, err => {
+                        message.error({ content: err.message, key, duration: 2 });
+                    });
             }
         });
     };
@@ -72,7 +107,6 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                 </div>
                 <div className="col-12 mainBody formCont">
                     <Form {...formItemLayout} onSubmit={handleSubmit}>
-
                         <Form.Item
                             label="Title"
                             labelAlign="left"
@@ -96,12 +130,35 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                             labelAlign="left"
                         >
                             {getFieldDecorator('company', {
-                                rules: [{
-                                    required: true,
-                                    message: 'Please company name!',
-                                    whitespace: true
-                                }],
-                            })(<Input />)}
+                                rules: [{ required: true, message: 'Please select company!', whitespace: true }],
+                            })(
+                                <Select
+                                    placeholder="Select a Company"
+                                // onChange={onChange}
+                                >
+                                    {
+                                        companies.map((company: ICompanyModel) => <Option key={company.id} value={company.id}>{company.title}</Option>)
+                                    }
+                                </Select>
+                            )}
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Organisation"
+                            labelAlign="left"
+                        >
+                            {getFieldDecorator('organisation', {
+                                rules: [{ required: true, message: 'Please select organisation!', whitespace: true }],
+                            })(
+                                <Select
+                                    placeholder="Select an Organisation"
+                                // onChange={onChange}
+                                >
+                                    {
+                                        org.map((organisation: IOrganisation) => <Option key={organisation.id} value={organisation.id}>{organisation.title}</Option>)
+                                    }
+                                </Select>
+                            )}
                         </Form.Item>
 
                         <Form.Item
@@ -134,8 +191,17 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                             labelAlign="left"
                         >
                             {getFieldDecorator('category', {
-                                rules: [{ required: true, message: 'Please enter Job Category!', whitespace: true }],
-                            })(<Input />)}
+                                rules: [{ required: true, message: 'Please select job category!', whitespace: true }],
+                            })(
+                                <Select
+                                    placeholder="Select a Category"
+                                // onChange={onChange}
+                                >
+                                    {
+                                        categories.map((category: ICategory) => <Option key={category.id} value={category.id}>{category.title}</Option>)
+                                    }
+                                </Select>
+                            )}
                         </Form.Item>
 
                         <Form.Item
