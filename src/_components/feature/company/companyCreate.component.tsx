@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Select, Button, Input, message } from 'antd';
 import { FormComponentProps } from "antd/lib/form";
-import { CompanyCreateModel, ICompanyModel } from '../../../_models/company.model';
+import { CompanyCreateModel } from '../../../_models/company.model';
 import TextArea from 'antd/lib/input/TextArea';
 import { categoryService } from '../../../_services/categories.service';
 import { ICategory } from '../../../_models/category.model';

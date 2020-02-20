@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, Select, DatePicker, Radio, message } from 'antd';
+import { Form, Input, Button, Select, DatePicker, Radio, message, Modal } from 'antd';
 import { FormComponentProps } from "antd/lib/form";
 import TextArea from 'antd/lib/input/TextArea';
 import './style.scss';
@@ -11,6 +11,7 @@ import { companyService } from '../../../_services/company.service';
 import { ICompanyModel } from '../../../_models/company.model';
 import { userService, authenticationService } from '../../../_services';
 import { IOrganisation } from '../../../_models/organisation.model';
+import { QuickCompanyAddModal } from '../company/quickCompanyAddModal.component';
 
 
 type FormProps = FormComponentProps;
@@ -20,9 +21,12 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
     const createModel = {} as IJobCreateModel;
     const [categories, setCategories] = useState([] as unknown as ICategory[]);
     const [companies, setCompanies] = useState([] as unknown as ICompanyModel[]);
+    const [visible, setVisible] = useState(false)
     const { Option } = Select;
     const [org, setOrg] = useState([] as unknown as IOrganisation[]);
     const user = authenticationService.currentUserValue;
+    const [refreshingCompany, setRefreshingCompany] = useState(false);
+    const [creatingJob, setCreatingJob] = useState(false);
 
     const children: string[] = [];
 
@@ -54,6 +58,9 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                 chatbot: "5e3fbe33e8e69e476d6b784d",
                 user: user.id
             }
+            console.log('err: ', err);
+            console.log('values: ', values);
+
             if (!err) {
                 const model = new JobCreateModel({ ...modelVals });
                 message.loading({ content: 'Saving Job...', key });
@@ -73,6 +80,20 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
 
     function onChange(date: any, dateString: string) {
         createModel.closing_date = dateString;
+    }
+
+    function onCloseModal() {
+        setVisible(false);
+        setRefreshingCompany(true);
+        companyService.getCompany()
+            .then((res: ICompanyModel[]) => {
+                setCompanies(res);
+                setRefreshingCompany(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setRefreshingCompany(false);
+            });
     }
 
     const formItemLayout = {
@@ -101,6 +122,12 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
 
     return (
         <div className="col-12">
+            <Modal
+                visible={visible}
+                title="Quick Company Add"
+                onCancel={onCloseModal}
+                footer={null}
+            > <QuickCompanyAddModal /></Modal>
             <div className="containerBody col-12">
                 <div className="col-12 graphContainerHeader">
                     <p>Create Job</p>
@@ -129,18 +156,31 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                             label="Company"
                             labelAlign="left"
                         >
-                            {getFieldDecorator('company', {
-                                rules: [{ required: true, message: 'Please select company!', whitespace: true }],
-                            })(
-                                <Select
-                                    placeholder="Select a Company"
-                                // onChange={onChange}
-                                >
-                                    {
-                                        companies.map((company: ICompanyModel) => <Option key={company.id} value={company.id}>{company.title}</Option>)
-                                    }
-                                </Select>
-                            )}
+                            <div className="row">
+                                <div className="col-9">
+                                    {getFieldDecorator('company', {
+                                        rules: [{ required: true, message: 'Please select company!', whitespace: true }],
+                                    })(
+                                        <Select
+                                            placeholder="Select a Company"
+                                            loading={refreshingCompany}
+                                            disabled={refreshingCompany}
+                                        >
+                                            {
+                                                companies.map((company: ICompanyModel) => <Option key={company.id} value={company.id}>{company.title}</Option>)
+                                            }
+                                        </Select>
+                                    )}
+                                </div>
+                                <div className="col">
+                                    <Button
+                                        onClick={() => setVisible(true)}
+                                        icon="file-add"
+                                        style={{ width: '100%' }}
+                                        type="danger">Add Company
+                                        </Button>
+                                </div>
+                            </div>
                         </Form.Item>
 
                         <Form.Item
@@ -232,7 +272,7 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                                 rules: [
                                     { type: 'object', required: true, message: 'Please select closing date!' }
                                 ],
-                            })(<DatePicker onChange={onChange} />)}
+                            })(<DatePicker style={{ width: '100%' }} onChange={onChange} />)}
                         </Form.Item>
 
                         <Form.Item
@@ -260,8 +300,8 @@ const JobCreateForm = (props: FormProps): JSX.Element => {
                         </Form.Item>
 
                         <Form.Item {...tailFormItemLayout}>
-                            <Button type="primary" htmlType="submit">
-                                Register
+                            <Button loading={creatingJob} type="primary" htmlType="submit">
+                                Create Job
                             </Button>
                         </Form.Item>
                     </Form>

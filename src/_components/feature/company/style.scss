@@ -1,0 +1,145 @@
+.companyContainerBody {
+    height: calc(100%);
+    overflow-y: scroll;
+    border: 1px solid rgb(241,
+            241,
+            241);
+
+    .companyInfo {
+        background-color: #FCFCFC;
+        height: 100px;
+
+        .logoCont {
+            height: 100px;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border-block-end: 1px solid rgb(241, 241, 241);
+
+            img {
+                max-width: 60%;
+            }
+        }
+
+        .tagsCont {
+            border-block-end: 1px solid rgb(241, 241, 241);
+            display: grid;
+            place-items: center start;
+        }
+
+        .detailsCont {
+            height: 100px;
+            display: grid;
+            overflow: hidden;
+            grid-template-rows: 40% 30% 30%;
+            border-block-end: 1px solid rgb(241, 241, 241);
+
+            .detailsContName {
+                display: grid;
+                place-items: end start;
+
+                p {
+                    margin-bottom: 0;
+                    font-weight: 700;
+                    font-size: 24px;
+                }
+            }
+
+            .detailsContCity {
+                display: grid;
+                place-items: center start;
+
+                p {
+                    margin-bottom: 0;
+                    font-weight: 500;
+                }
+            }
+
+            .detailsContContact {
+                display: grid;
+                place-items: start;
+
+                p {
+                    margin-bottom: 0;
+                    font-weight: 300;
+                }
+            }
+        }
+    }
+
+    .companyJobs {
+        ul {
+            padding: 0;
+
+            li {
+                list-style: none;
+                block-size: 60px;
+                overflow: hidden;
+                border: 1px solid rgb(241, 241, 241);
+
+                .jobListIcn {
+                    block-size: 60px;
+                    display: grid;
+                    place-items: center;
+                }
+
+                .jobListName {
+                    block-size: 60px;
+                    display: grid;
+                    place-items: center start;
+
+                    p {
+                        margin-bottom: 0;
+                        font-weight: bold;
+                    }
+                }
+
+                .jobListAction {
+                    block-size: 60px;
+
+                    .actionIcnCont {
+                        display: grid;
+                        place-items: center;
+                        block-size: 60px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.JobsList {
+    margin-bottom: 15px;
+    padding: 0 0 15px 0;
+    overflow-y: scroll;
+
+    li {
+        height: 60px;
+        list-style: none;
+        border-block-end: 1px solid #f1f1f1;
+
+        .listName {
+            height: 60px;
+            display: grid;
+            place-items: center start;
+
+            p {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 600;
+
+                span {
+                    font-size: small;
+                    color: #aaaaaa;
+                }
+            }
+        }
+
+        .listIcn {
+            display: grid;
+            place-items: center;
+        }
+
+        .btnOptions {}
+    }
+}

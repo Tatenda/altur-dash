@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { ICompanyModel } from '../../../_models/company.model';
 import { companyService } from '../../../_services/company.service';
-import { Icon, Tooltip, Button } from 'antd';
+import { Icon, Tooltip, Button, message } from 'antd';
 import { history } from '../../../_helpers';
 
 export const CompanyList = () => {
     let [companies, setCompanies] = useState(null as unknown as ICompanyModel[]);
+    let [loadingContent, setloadingContent] = useState('Loading...');
 
     useEffect(() => {
         companyService.getCompany().then(res => {
             setCompanies(res);
+            console.log(res);
+
         })
     }, []);
 
@@ -18,15 +21,25 @@ export const CompanyList = () => {
     }
 
     const viewCompany = (id: string) => {
-        console.log('view company');
-
         history.push(`/dashboard/company/${id}/profile`);
     }
 
     const deleteCompany = (id: string) => {
+        const key = 'updatable';
+        setloadingContent('Saving Company...')
+        message.loading({ content: loadingContent, key });
         companyService.deleteCompany(id)
             .then(res => {
-                console.log(res);
+                // message.loading({ content: 'Delete Successful. Reloading Companies...', key });
+                setloadingContent('Delete Successful. Reloading Companies...')
+                companyService.getCompany().then(res => {
+                    setCompanies(res);
+                    message.success({ content: 'Reload Succeful!', key, duration: 2 });
+                }, err => {
+                    message.error({ content: err.message, key, duration: 2 });
+                })
+            }, err => {
+                message.error({ content: err.message, key, duration: 2 });
             })
     }
 
@@ -39,7 +52,7 @@ export const CompanyList = () => {
                     </div>
                     <div className="col-12 mainBody">
                         {(companies.length) ?
-                            <ul className="listCont" style={{ overflow: 'hidden' }}>
+                            <ul className="JobsList" style={{ overflow: 'hidden' }}>
                                 {companies.map((company: ICompanyModel) => {
                                     return (
                                         <li key={company.id}>
@@ -74,7 +87,6 @@ export const CompanyList = () => {
                                                                     style={{ color: '#111f4d', border: 'none' }} />
                                                             </Tooltip>
                                                         </div>
-
                                                         <div className='col-4 btnCont'>
                                                             <Tooltip placement="right" title="Delete Company">
                                                                 <Button

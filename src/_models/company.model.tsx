@@ -14,6 +14,7 @@ export class CompanyCreateModel {
     address: string;
     city: string;
     user: string;
+    organisation: string
 
     constructor(model: any) {
         this.title = model && model.title;
@@ -29,6 +30,7 @@ export class CompanyCreateModel {
         this.address = model && model.address;
         this.city = model && model.city;
         this.user = model && model.user;
+        this.organisation = model && model.organisation;
     }
 }
 
@@ -39,8 +41,16 @@ export interface ICompanyModel {
     slug: string;
     description: string;
     keywords: string[];
-    chatbot: string;
-    category: string;
+    chatbot: {
+        id: string,
+        title: string,
+        slug: string
+    };
+    category: {
+        id: string,
+        title: string,
+        slug: string
+    };
     province: string;
     closing_date: string;
     email: string;

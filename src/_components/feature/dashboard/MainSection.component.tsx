@@ -30,30 +30,7 @@ const MainSection: React.FC = () => {
     return (
         <div className="row">
             <div className="col-8 dashboardMainSection">
-                <div className="col-12 sectionHeader">
-                    <div className="row">
-                        <div className="col-1 menuIcon">
-                            <Dropdown overlay={menu} placement="bottomRight">
-                                <Icon type="more" />
-                            </Dropdown>
-                        </div>
-                        <div className="col-7 headerMainArea">
-                            <p>All</p>
-                        </div>
-                        <div className="col dateRange">
-                            <RangePicker
-                                ranges={{
-                                    Today: [moment(), moment()],
-                                    'This Week': [moment().startOf('week'), moment().endOf('week')],
-                                    'This Month': [moment().startOf('month'), moment().endOf('month')],
-                                    'This Year': [moment().startOf('year'), moment().endOf('year')],
-                                }}
-                                onChange={onDateChange}
-                                size="small"
-                            />
-                        </div>
-                    </div>
-                </div>
+                
                 <div className="row">
                     <div className="col-12 sectionBody">
                         <div className="row">

@@ -3,6 +3,7 @@ import { authenticationService } from '../_services';
 export function handleResponse(response: any) {
     try {
         return response.json().then((res: any) => {
+            console.log(res);
             if (!response.ok) {
                 if ([401, 403].indexOf(response.status) !== -1) {
                     authenticationService.logout();
