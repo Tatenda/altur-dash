@@ -33,7 +33,7 @@ export const JobList: React.FC = () => {
                     </div>
                     <div className="col-12 mainBody">
                         {(jobs.length) ?
-                            <ul className="listCont" style={{ overflow: 'hidden' }}>
+                            <ul className="JobsList" style={{ overflow: 'hidden' }}>
                                 {jobs.map((job: IJobModel) => {
                                     return (
                                         <li key={job.id}>

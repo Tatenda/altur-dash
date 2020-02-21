@@ -193,3 +193,39 @@
         }
     }
 }
+
+.JobsList {
+    margin-bottom: 15px;
+    padding: 0 0 15px 0;
+    overflow-y: scroll;
+
+    li {
+        height: 60px;
+        list-style: none;
+        border-block-end: 1px solid #f1f1f1;
+
+        .listName {
+            height: 60px;
+            display: grid;
+            place-items: center start;
+
+            p {
+                margin: 0;
+                font-size: 18px;
+                font-weight: 600;
+
+                span {
+                    font-size: small;
+                    color: #aaaaaa;
+                }
+            }
+        }
+
+        .listIcn {
+            display: grid;
+            place-items: center;
+        }
+
+        .btnOptions {}
+    }
+}

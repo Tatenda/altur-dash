@@ -31,7 +31,6 @@ const CompanyCreateForm = (props: FormProps): JSX.Element => {
         e.preventDefault();
         const key = 'updatable';
         props.form.validateFields((err, values) => {
-            console.log(authenticationService.currentUserValue);
             const modelVals = {
                 ...values,
                 user: authenticationService.currentUserValue.id

@@ -26,12 +26,10 @@ export const CompanyList = () => {
 
     const deleteCompany = (id: string) => {
         const key = 'updatable';
-        setloadingContent('Saving Company...')
-        message.loading({ content: loadingContent, key });
+        message.loading({ content: 'Saving Company...', key });
         companyService.deleteCompany(id)
             .then(res => {
-                // message.loading({ content: 'Delete Successful. Reloading Companies...', key });
-                setloadingContent('Delete Successful. Reloading Companies...')
+                message.loading({ content: 'Delete Successful. Reloading Companies...', key });
                 companyService.getCompany().then(res => {
                     setCompanies(res);
                     message.success({ content: 'Reload Succeful!', key, duration: 2 });
